@@ -1,53 +1,61 @@
 <script lang="ts">
-	import Router, { link } from 'svelte-spa-router'
+	import Router from 'svelte-spa-router'
+	import Header from './layout/Header.svelte'
 	import Home from './routes/Home.svelte'
 	import NotFound from './routes/NotFound.svelte'
 	import Photos from './routes/Photos.svelte'
+
 	const routes = {
-		// Exact path
+		// Unauthenticated Routes
 		'/': Home,
 
-		// Using named parameters, with last being optional
+		// Authenticated Routes
 		'/photos/:id?': Photos,
 
-		// Catch-all
-		// This is optional, but if present it must be the last
+		// Unknown
 		'*': NotFound,
 	}
-
 </script>
 
 <main>
-	<header>
-		<h1>Photography</h1>
-		<ul>
-			<li>
-				<a href="/" use:link>Home</a>
-			</li>
-			<li>
-				<a href="/photos/123" use:link>Photos</a>
-			</li>
-		</ul>
-		
-	</header>
-
-	<Router {routes}/>
+	<div class="header">
+		<Header />
+	</div>
+	<div class="router">
+		<Router {routes} />
+	</div>
 </main>
 
 <style lang="scss">
+	@import './styles/common.scss';
+
 	main {
+		background-color: $colorDark;
+		background-image: url('../assets/images/stock-city.jpg') 100% 100% cover;
 		margin: 0 auto;
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
 		align-items: center;
 		min-height: 100vh;
 		min-width: 100vw;
 		overflow: hidden;
-		background: #CCC;
 		flex-direction: column;
 
-		h1 {
-			color: #666;
+		.header, .router {
+			min-width: 100%;
+			display: flex;
+			margin: 0;
+			padding: 0;
+		}
+
+		.header {
+			flex-shrink: 1;
+		}
+
+		.router {
+			flex-grow: 1;
+			min-height: 100%;
+			min-width: 100%;
 		}
 	}
 
