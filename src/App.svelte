@@ -3,8 +3,8 @@
 	import Header from './layout/Header.svelte'
 	import Home from './routes/Home.svelte'
 	import NotFound from './routes/NotFound.svelte'
-	import Photos from './routes/Photos.svelte'
-
+	import Photos from '@src/routes/Photos.svelte'
+	
 	const routes = {
 		// Unauthenticated Routes
 		'/': Home,

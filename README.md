@@ -1,22 +1,29 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+# Donovan Photography
 
----
-
-# svelte app
-
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
-
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
-
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
-
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+## Description
+This is a photography website meant to serve two purposes.  
+>   
+> - It is both a front end client for portfolio / marketing purposes.  
+> - It is a platform to distribute photos and images to clients   
+>    
 
 
-## Get started
+- [Donovan Photography](#donovan-photography)
+  - [Description](#description)
+  - [Get started (dev)](#get-started-dev)
+  - [Building and running in production mode](#building-and-running-in-production-mode)
+  - [Single-page app mode](#single-page-app-mode)
+  - [Architecture](#architecture)
+    - [Frontend](#frontend)
+    - [Hosting](#hosting)
+    - [Database](#database)
+    - [Storage](#storage)
+    - [Users](#users)
+  - [Deployment](#deployment)
+  - [Contribution](#contribution)
+  - [Attributions](#attributions)
+
+## Get started (dev)
 
 Install the dependencies...
 
@@ -58,48 +65,41 @@ If you're building a single-page app (SPA) with multiple routes, sirv needs to b
 "start": "sirv public --single"
 ```
 
-## Using TypeScript
+## Architecture
 
-This template comes with a script to set up a TypeScript development environment, you can run it immediately after cloning the template with:
+### Frontend
 
-```bash
-node scripts/setupTypeScript.js
-```
+Frontend is built from scratch in Svelte using minimal external dependencies.
+> [Svelte](https://svelte.dev/docs)
 
-Or remove the script via:
+### Hosting
 
-```bash
-rm scripts/setupTypeScript.js
-```
+AWS hosts the service using Route 53 <tbd>. It is deployed via a CI/CD process with AWS Amplify.
+> [See Deployment](#Deployment)
 
-## Deploying to the web
+### Database
 
-### With [Vercel](https://vercel.com)
+Dynamo DB will be used as a storage mechanism for relating S3 contents to Cognito user pools <tbd>
+> [Dynamo DB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
 
-Install `vercel` if you haven't already:
+### Storage
 
-```bash
-npm install -g vercel
-```
+Amazon S3 will serve as a mechanism to store photos uploaded for clients <tbd>
+> [Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html)
 
-Then, from within your project folder:
+### Users
 
-```bash
-cd public
-vercel deploy --name my-project
-```
+Cognito will serve as an authentication protocol to grant access to purchased content <tbd>
+> [Cognito](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html)
 
-### With [surge](https://surge.sh/)
+## Deployment
 
-Install `surge` if you haven't already:
+Deployment of the application is driven through a CI/CD system to AWS Amplify. <tbd status>
 
-```bash
-npm install -g surge
-```
+## Contribution
 
-Then, from within your project folder:
+Want to use this? Like the style? Want to work together? Contact below.
 
-```bash
-npm run build
-surge public my-project.surge.sh
-```
+## Attributions
+
+Author - [Nicholas Hazel](https://github.com/sinsys)

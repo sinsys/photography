@@ -7,8 +7,13 @@ import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 import preprocess from 'svelte-preprocess';
 import image from '@rollup/plugin-image';
+import alias from '@rollup/plugin-alias';
+import path from 'path'
+import replace from '@rollup/plugin-replace';
+import env from './src/env'
 
 const production = !process.env.ROLLUP_WATCH;
+const projectRootDir = path.resolve(__dirname);
 
 function serve() {
 	let server;
@@ -68,10 +73,25 @@ export default {
 			browser: true,
 			dedupe: ['svelte']
 		}),
+
 		commonjs(),
 		typescript({
 			sourceMap: !production,
-			inlineSources: !production
+			inlineSources: !production,
+			rootDir: 'src'
+		}),
+
+		// Environment variables
+		replace(env),
+
+		// Allows for @src type imports
+		alias({
+			entries: [
+				{ 
+					find: '@src',
+					replacement: path.resolve(projectRootDir, 'src')
+				}
+			]
 		}),
 
 		// In dev mode, call `npm run start` once
