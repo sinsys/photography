@@ -3,10 +3,10 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 import preprocess from 'svelte-preprocess';
+import image from '@rollup/plugin-image';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -47,6 +47,14 @@ export default {
 				dev: !production
 			}
 		}),
+		/* Images are encoded using base64, which means they will be 
+		33% larger than the size on disk. You should therefore only 
+		use this for small images where the convenience of having 
+		them available on startup (e.g. rendering immediately to a 
+		canvas without co-ordinating asynchronous loading of several images) 
+		outweighs the cost. */
+		image(),
+
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
