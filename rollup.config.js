@@ -7,13 +7,29 @@ import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 import preprocess from 'svelte-preprocess';
 import image from '@rollup/plugin-image';
-import alias from '@rollup/plugin-alias';
-import path from 'path'
 import replace from '@rollup/plugin-replace';
-import env from './src/env'
+import dotenv from 'dotenv'
+import { cleanEnv, str } from 'envalid'
+const baseEnv = dotenv.config({ path: './.env' })
+
+const env = cleanEnv(baseEnv.parsed, {
+	// RUNTIME
+	NODE_ENV: str({ choices: ['development', 'test', 'production', 'staging']}),
+
+	// API GW
+  AMAZON_IDENTITY_POOL_ID: str(),
+	AMAZON_USER_POOL_ID: str(),
+	AMAZON_API_GW_ID: str(),
+	AMAZON_STAGE_NAME: str(),
+  AMAZON_REGION: str(),
+  AMAZON_WEB_CLIENT_ID: str(),
+	AMAZON_WEB_CLIENT_SECRET: str(),
+
+	// APP
+	APP_NAME: str()
+})
 
 const production = !process.env.ROLLUP_WATCH;
-const projectRootDir = path.resolve(__dirname);
 
 function serve() {
 	let server;
@@ -45,6 +61,10 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		replace({
+			'process.env.NODE_ENV': JSON.stringify('development'),
+			'process.env._APP_ENV_': JSON.stringify(env)
+		}),
 		svelte({
       preprocess: preprocess(),
 			compilerOptions: {
@@ -59,11 +79,9 @@ export default {
 		canvas without co-ordinating asynchronous loading of several images) 
 		outweighs the cost. */
 		image(),
-
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
-
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
 		// some cases you'll need additional configuration -
@@ -73,25 +91,11 @@ export default {
 			browser: true,
 			dedupe: ['svelte']
 		}),
-
 		commonjs(),
 		typescript({
 			sourceMap: !production,
 			inlineSources: !production,
 			rootDir: 'src'
-		}),
-
-		// Environment variables
-		replace(env),
-
-		// Allows for @src type imports
-		alias({
-			entries: [
-				{ 
-					find: '@src',
-					replacement: path.resolve(projectRootDir, 'src')
-				}
-			]
 		}),
 
 		// In dev mode, call `npm run start` once

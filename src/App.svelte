@@ -3,8 +3,8 @@
 	import Header from './layout/Header.svelte'
 	import Home from './routes/Home.svelte'
 	import NotFound from './routes/NotFound.svelte'
-	import Photos from '@src/routes/Photos.svelte'
-	
+	import Photos from './routes/Photos.svelte'
+
 	const routes = {
 		// Unauthenticated Routes
 		'/': Home,
@@ -30,8 +30,11 @@
 	@import './styles/common.scss';
 
 	main {
-		background-color: $colorDark;
-		background-image: url('../assets/images/stock-city.jpg') 100% 100% cover;
+		background: $colorDark;
+		background: url('../images/stock-city.jpg') no-repeat center center fixed;
+		-webkit-background-size: cover;
+		background-size: cover;
+		
 		margin: 0 auto;
 		display: flex;
 		justify-content: flex-start;
@@ -50,6 +53,7 @@
 
 		.header {
 			flex-shrink: 1;
+			background: $colorDark;
 		}
 
 		.router {
