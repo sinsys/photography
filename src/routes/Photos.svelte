@@ -3,7 +3,8 @@
 </script>
 
 <div class="route">
-  [Authenticated] Photos
+  <h2>Photos</h2>
+  <p>[Authenticated Route] Photos<p>
 </div>
 
 <style lang="scss">

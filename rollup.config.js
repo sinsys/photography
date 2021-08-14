@@ -9,22 +9,16 @@ import preprocess from 'svelte-preprocess';
 import image from '@rollup/plugin-image';
 import replace from '@rollup/plugin-replace';
 import dotenv from 'dotenv'
-import { cleanEnv, str } from 'envalid'
-const baseEnv = dotenv.config({ path: './.env' })
+import { cleanEnv, str, url } from 'envalid'
+const baseEnv = dotenv.config()
 
 const env = cleanEnv(baseEnv.parsed, {
 	// RUNTIME
 	NODE_ENV: str({ choices: ['development', 'test', 'production', 'staging']}),
-
-	// API GW
-  AMAZON_IDENTITY_POOL_ID: str(),
-	AMAZON_USER_POOL_ID: str(),
-	AMAZON_API_GW_ID: str(),
-	AMAZON_STAGE_NAME: str(),
-  AMAZON_REGION: str(),
-  AMAZON_WEB_CLIENT_ID: str(),
-	AMAZON_WEB_CLIENT_SECRET: str(),
-
+	
+	// AWS
+	CORE_API_ENDPOINT: url(),
+	
 	// APP
 	APP_NAME: str()
 })

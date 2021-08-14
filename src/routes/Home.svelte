@@ -1,10 +1,10 @@
 <script lang="ts">
-  let title = '[Donovan] Photography'
   const _APP_ENV_: any = process.env._APP_ENV_ ?? {}
 </script>
 
 <div class="route">
-  Welcome to [{_APP_ENV_.APP_NAME}] Photography
+  <h2>Welcome to {_APP_ENV_.APP_NAME}</h2>
+  <p>[Unauthenticated Route] Home<p>
 </div>
 
 <style lang="scss">

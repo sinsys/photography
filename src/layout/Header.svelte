@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { link } from 'svelte-spa-router'
+  const _APP_ENV_: any = process.env._APP_ENV_
 </script>
 
 <header>
-  <h1>Photography</h1>
+  <h1>{_APP_ENV_.APP_NAME}</h1>
   <ul>
     <li>
       <a href="/" use:link>Home</a>
